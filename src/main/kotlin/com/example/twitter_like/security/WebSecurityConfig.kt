@@ -37,7 +37,8 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
         //認証不要エンドポイント
         http
             .authorizeRequests()
-            .antMatchers(HttpMethod.GET, "/hello_world").permitAll()
+            .antMatchers(HttpMethod.GET, "/hello_world","/hello_world/everyone").permitAll()
+            .antMatchers(HttpMethod.GET, "/hello_world/logged_in_user").hasAnyAuthority("USER")
             // ログイン
             .and()
             .formLogin()
