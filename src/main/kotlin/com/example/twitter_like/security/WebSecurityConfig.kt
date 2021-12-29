@@ -1,5 +1,7 @@
 package com.example.twitter_like.security
 
+import com.example.twitter_like.security.handler.SimpleAccessDeniedHandler
+import com.example.twitter_like.security.handler.SimpleAuthenticationEntryPoint
 import com.example.twitter_like.security.handler.SimpleAuthenticationFailureHandler
 import com.example.twitter_like.security.handler.SimpleAuthenticationSuccessHandler
 import org.springframework.context.annotation.Bean
@@ -11,6 +13,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.NoOpPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.security.web.AuthenticationEntryPoint
+import org.springframework.security.web.access.AccessDeniedHandler
 import org.springframework.security.web.authentication.AuthenticationFailureHandler
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler
@@ -39,6 +43,11 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
             .authorizeRequests()
             .antMatchers(HttpMethod.GET, "/hello_world","/hello_world/everyone").permitAll()
             .antMatchers(HttpMethod.GET, "/hello_world/logged_in_user").hasAnyAuthority("USER")
+            // 例外処理
+            .and()
+            .exceptionHandling()
+            .authenticationEntryPoint(authenticationEntryPoint())
+            .accessDeniedHandler(accessDeniedHandler())
             // ログイン
             .and()
             .formLogin()
@@ -86,6 +95,20 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
         return corsConfigurationSource
     }
 
+    /**
+     * 例外処理
+     */
+    fun authenticationEntryPoint(): AuthenticationEntryPoint? {
+        return SimpleAuthenticationEntryPoint()
+    }
+
+    fun accessDeniedHandler(): AccessDeniedHandler? {
+        return SimpleAccessDeniedHandler()
+    }
+
+    /**
+     * ログイン, ログアウト時のハンドリング
+     */
     fun authenticationSuccessHandler(): AuthenticationSuccessHandler? {
         return SimpleAuthenticationSuccessHandler()
     }
