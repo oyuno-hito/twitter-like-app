@@ -9,3 +9,9 @@ management:
   endpoint:
     health:
       show-details: always
+
+mybatis:
+  configuration:
+    mapUnderscoreToCamelCase: true
+    autoMappingUnknownColumnBehavior: WARNING
+    autoMappingBehavior: NONE

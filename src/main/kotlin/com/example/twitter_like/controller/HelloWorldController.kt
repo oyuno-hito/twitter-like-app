@@ -21,7 +21,7 @@ class HelloWorldController {
         @AuthenticationPrincipal
         loginUserDetails: LoginUserDetails?
     ): HelloWorldResponse {
-        val userName = loginUserDetails?.username?: "guest"
+        val userName = loginUserDetails?.getUserDisplayName()?: "guest"
         return HelloWorldResponse(value = "Hello $userName")
     }
 
@@ -31,7 +31,7 @@ class HelloWorldController {
         @AuthenticationPrincipal
         loginUserDetails: LoginUserDetails
     ): HelloWorldResponse {
-        val userName = loginUserDetails.username
+        val userName = loginUserDetails.getUserDisplayName()?: ""
         return HelloWorldResponse(value = "Hello $userName")
     }
 }
