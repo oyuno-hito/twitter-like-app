@@ -17,7 +17,7 @@ class LoginUserDetails(
     }
 
     override fun getUsername(): String {
-        return loginUser.userName
+        return loginUser.loginId
     }
 
     override fun getPassword(): String {
@@ -34,5 +34,9 @@ class LoginUserDetails(
 
     override fun isAccountNonLocked(): Boolean {
         return true
+    }
+
+    fun getUserDisplayName(): String? {
+        return loginUser.name
     }
 }
