@@ -1,5 +1,6 @@
 package com.example.twitter_like.security
 
+import com.example.twitter_like.enum.Role
 import com.example.twitter_like.security.handler.SimpleAccessDeniedHandler
 import com.example.twitter_like.security.handler.SimpleAuthenticationEntryPoint
 import com.example.twitter_like.security.handler.SimpleAuthenticationFailureHandler
@@ -41,8 +42,9 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
         //認証不要エンドポイント
         http
             .authorizeRequests()
-            .antMatchers(HttpMethod.GET, "/hello_world","/hello_world/everyone").permitAll()
-            .antMatchers(HttpMethod.GET, "/hello_world/logged_in_user").hasAnyAuthority("USER")
+            .antMatchers(HttpMethod.GET, "/hello_world", "/hello_world/everyone").permitAll()
+            .antMatchers(HttpMethod.GET, "/hello_world/logged_in_user")
+            .hasAnyAuthority(Role.ADMIN.roleName, Role.DEVELOPER.roleName, Role.USER.roleName)
             // 例外処理
             .and()
             .exceptionHandling()
