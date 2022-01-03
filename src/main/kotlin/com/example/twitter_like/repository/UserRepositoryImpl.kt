@@ -1,14 +1,15 @@
 package com.example.twitter_like.repository
 
+import com.example.twitter_like.mapper.UserMapper
 import com.example.twitter_like.model.LoginUser
+import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Component
 
 @Component
-class UserRepositoryImpl: UserRepository {
+class UserRepositoryImpl(
+    private val userMapper: UserMapper
+): UserRepository {
     override fun findByLoginId(loginId: String): LoginUser {
-        // TODO: DBを使った認証
-        return LoginUser(
-            loginId = loginId
-        )
+        return userMapper.findByLoginId(loginId)?: throw UsernameNotFoundException("ログインIDかパスワードが間違っています")
     }
 }
