@@ -1,0 +1,11 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.twitter_like.mapper.UserMapper">
+    <resultMap id="findByLoginId" type="com.example.twitter_like.model.LoginUser"  autoMapping="true">
+        <id column="id" property="id"/>
+        <result column="login_id" property="loginId"/>
+        <result column="password" property="password"/>
+        <result column="name" property="name"/>
+        <result column="role_id" property="roleId"/>
+        <result column="role_name" property="role"/>
+    </resultMap>
+</mapper>
